@@ -1,0 +1,36 @@
+<%- include('partials/header') %>
+
+<section class="todo-app">
+  <form id="todo-form">
+    <input id="title" name="title" placeholder="Add a new todo..." required />
+    <input id="description" name="description" placeholder="Optional description" />
+    <button type="submit">Add</button>
+  </form>
+
+  <div id="message"><%= message ? message : '' %></div>
+
+  <ul id="todo-list">
+    <% if (todos && todos.length) { %>
+      <% todos.forEach(function(todo) { %>
+        <li data-id="<%= todo.id %>" class="<%= todo.completed ? 'completed' : '' %>">
+          <input class="toggle" type="checkbox" <%= todo.completed ? 'checked' : '' %> />
+          <div class="content">
+            <strong class="title"><%= todo.title %></strong>
+            <% if (todo.description) { %>
+              <div class="desc"><%= todo.description %></div>
+            <% } %>
+            <div class="meta">Created: <%= new Date(todo.createdAt).toLocaleString() %></div>
+          </div>
+          <div class="actions">
+            <button class="edit">Edit</button>
+            <button class="delete">Delete</button>
+          </div>
+        </li>
+      <% }) %>
+    <% } else { %>
+      <li class="empty">No todos yet — add one above.</li>
+    <% } %>
+  </ul>
+</section>
+
+<%- include('partials/footer') %>
